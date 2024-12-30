@@ -1,60 +1,79 @@
 package com.quan.laptrinhmang.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "songs")
+@Table(name = "songs") // Đặt tên bảng trong cơ sở dữ liệu
 public class Song {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động sinh giá trị ID
+    private Long id; // Trường khóa chính
 
-    @Column(nullable = false)
-    private String name;
+    private String title; // Tên bài hát
+    private String artist; // Nghệ sĩ
+    private String genre; // Thể loại
+    private LocalDate releaseDate; // Ngày phát hành
+    private String link; // Đường dẫn bài hát (nếu có)
 
-    @Column(nullable = false)
-    private String composer;
+    // Constructor không tham số (bắt buộc với Hibernate)
+    public Song() {}
 
-    @Lob
-    private String lyrics;
-
-    @Column(name = "audio_link")
-    private String audioLink;
-
-    @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @ManyToMany(mappedBy = "songs")
-    private Set<Artist> artists = new HashSet<>();
-
-    // Constructors, Getters, and Setters
-    public Song() {
+    // Constructor có tham số
+    public Song(String title, String artist, String genre, LocalDate releaseDate, String link) {
+        this.title = title;
+        this.artist = artist;
+        this.genre = genre;
+        this.releaseDate = releaseDate;
+        this.link = link;
     }
 
-    public Song(String name, String composer, String lyrics, String audioLink) {
-        this.name = name;
-        this.composer = composer;
-        this.lyrics = lyrics;
-        this.audioLink = audioLink;
+    // Getters và Setters
+    public Long getId() {
+        return id;
     }
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
+    public String getTitle() {
+        return title;
     }
 
-    // Other Getters and Setters
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

@@ -1,0 +1,127 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html lang="en">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta name="viewport" content="width=device-width, initial-scale=1.0">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Song Search</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <style>&ndash;&gt;-->
+<!--&lt;!&ndash;        body {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: Arial, sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #f4f4f9;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        h1 {&ndash;&gt;-->
+<!--&lt;!&ndash;            text-align: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #333;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .song {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 15px 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .song h2 {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 0 0 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #007BFF;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .song p {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin: 5px 0;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #555;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .song .artists {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-top: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        .song .artists span {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #007BFF;&ndash;&gt;-->
+<!--&lt;!&ndash;            color: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 5px 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 3px;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-right: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+<!--&lt;!&ndash;<h1>Search Results</h1>&ndash;&gt;-->
+<!--&lt;!&ndash;<div id="results">&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash; Template for songs &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash; Example &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="song">&ndash;&gt;-->
+<!--&lt;!&ndash;        <h2>Song Name</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p><strong>Composer:</strong> Composer Name</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p><strong>Lyrics:</strong> Song lyrics here...</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <p><strong>Audio Link:</strong> <a href="audio_link">Listen</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="artists">&ndash;&gt;-->
+<!--&lt;!&ndash;            <strong>Artists:</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span>Artist 1</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span>Artist 2</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+<!--&lt;!&ndash;    // Example Data - Replace this with API call results&ndash;&gt;-->
+<!--&lt;!&ndash;    const songs = [&ndash;&gt;-->
+<!--&lt;!&ndash;        {&ndash;&gt;-->
+<!--&lt;!&ndash;            name: "Song 1",&ndash;&gt;-->
+<!--&lt;!&ndash;            composer: "Composer 1",&ndash;&gt;-->
+<!--&lt;!&ndash;            lyrics: "Lyrics for Song 1...",&ndash;&gt;-->
+<!--&lt;!&ndash;            audioLink: "https://example.com/song1",&ndash;&gt;-->
+<!--&lt;!&ndash;            artists: ["Artist A", "Artist B"]&ndash;&gt;-->
+<!--&lt;!&ndash;        },&ndash;&gt;-->
+<!--&lt;!&ndash;        {&ndash;&gt;-->
+<!--&lt;!&ndash;            name: "Song 2",&ndash;&gt;-->
+<!--&lt;!&ndash;            composer: "Composer 2",&ndash;&gt;-->
+<!--&lt;!&ndash;            lyrics: "Lyrics for Song 2...",&ndash;&gt;-->
+<!--&lt;!&ndash;            audioLink: "https://example.com/song2",&ndash;&gt;-->
+<!--&lt;!&ndash;            artists: ["Artist C"]&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    ];&ndash;&gt;-->
+
+<!--&lt;!&ndash;    const resultsDiv = document.getElementById('results');&ndash;&gt;-->
+
+<!--&lt;!&ndash;    songs.forEach(song => {&ndash;&gt;-->
+<!--&lt;!&ndash;        const songDiv = document.createElement('div');&ndash;&gt;-->
+<!--&lt;!&ndash;        songDiv.className = 'song';&ndash;&gt;-->
+
+<!--&lt;!&ndash;        songDiv.innerHTML = `&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>${song.name}</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p><strong>Composer:</strong> ${song.composer}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p><strong>Lyrics:</strong> ${song.lyrics}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p><strong>Audio Link:</strong> <a href="${song.audioLink}" target="_blank">Listen</a></p>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="artists">&ndash;&gt;-->
+<!--&lt;!&ndash;                <strong>Artists:</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                ${song.artists.map(artist => `<span>${artist}</span>`).join('')}&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        `;&ndash;&gt;-->
+
+<!--&lt;!&ndash;        resultsDiv.appendChild(songDiv);&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Search Songs</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Tìm kiếm bài hát</h1>-->
+<!--<form method="get" action="/search">-->
+<!--    <input type="text" name="query" placeholder="Nhập tên bài hát">-->
+<!--    <button type="submit">Tìm kiếm</button>-->
+<!--</form>-->
+
+<!--<div th:if="${songs != null}">-->
+<!--    <h2>Kết quả tìm kiếm</h2>-->
+<!--    <ul>-->
+<!--        <li th:each="song : ${songs}">-->
+<!--            <p th:text="${song.name} + ' - ' + ${song.artist}"></p>-->
+<!--            <audio th:src="${song.previewUrl}" controls></audio>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

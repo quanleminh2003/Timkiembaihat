@@ -1,0 +1,465 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout}">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Tìm kiếm bài hát và ca sĩ</title>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">-->
+<!--    <style>-->
+
+
+<!--        nav {-->
+<!--            background-color: #5c6bc0;-->
+<!--            padding: 15px;-->
+<!--            color: white;-->
+<!--            font-size: 1.8rem;-->
+<!--            text-align: center;-->
+<!--            border-bottom: 3px solid #3949ab;-->
+<!--        }-->
+
+<!--        nav span {-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            margin-top: 30px;-->
+<!--            padding: 0 20px;-->
+<!--            max-width: 1200px;-->
+<!--            margin-left: auto;-->
+<!--            margin-right: auto;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            color: #444;-->
+<!--            margin-bottom: 20px;-->
+<!--            font-size: 2rem;-->
+<!--        }-->
+
+<!--        form {-->
+<!--            margin-bottom: 20px;-->
+<!--            text-align: center;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            gap: 10px;-->
+<!--        }-->
+
+<!--        input[type="text"] {-->
+<!--            width: 300px;-->
+<!--            padding: 12px;-->
+<!--            border: 2px solid #ddd;-->
+<!--            border-radius: 5px;-->
+<!--            font-size: 1rem;-->
+<!--            outline: none;-->
+<!--            transition: border-color 0.3s;-->
+<!--        }-->
+
+<!--        input[type="text"]:focus {-->
+<!--            border-color: #5c6bc0;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            padding: 12px 20px;-->
+<!--            background-color: #5c6bc0;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--            border-radius: 5px;-->
+<!--            font-size: 1rem;-->
+<!--            transition: background-color 0.3s;-->
+<!--        }-->
+
+<!--        button:hover {-->
+<!--            background-color: #3949ab;-->
+<!--        }-->
+
+<!--        .table {-->
+<!--            width: 100%;-->
+<!--            border-collapse: collapse;-->
+<!--            margin-top: 30px;-->
+<!--        }-->
+
+<!--        .table th, .table td {-->
+<!--            padding: 12px;-->
+<!--            text-align: left;-->
+<!--            border: 1px solid #ddd;-->
+<!--            font-size: 1rem;-->
+<!--        }-->
+
+<!--        .table th {-->
+<!--            background-color: #e8eaf6;-->
+<!--        }-->
+
+<!--        .table tr:hover {-->
+<!--            background-color: #f5f5f5;-->
+<!--        }-->
+
+<!--        .error {-->
+<!--            color: #e53935;-->
+<!--            text-align: center;-->
+<!--            margin-top: 30px;-->
+<!--            font-size: 1.2rem;-->
+<!--        }-->
+
+<!--        ul {-->
+<!--            padding: 0;-->
+<!--            list-style-type: none;-->
+<!--            margin: 0;-->
+<!--        }-->
+
+<!--        li {-->
+<!--            margin-bottom: 5px;-->
+<!--            font-size: 1rem;-->
+<!--        }-->
+
+<!--        a {-->
+<!--            text-decoration: none;-->
+<!--            color: #5c6bc0;-->
+<!--        }-->
+
+<!--        a:hover {-->
+<!--            text-decoration: underline;-->
+<!--        }-->
+
+<!--        .spotify-player {-->
+<!--            margin-top: 10px;-->
+<!--        }-->
+
+<!--        iframe {-->
+<!--            border: none;-->
+<!--            width: 100%;-->
+<!--            height: 80px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav>-->
+<!--    <span>Web Tìm Kiếm Bài Hát</span>-->
+<!--</nav>-->
+
+<!--<section layout:fragment="content">-->
+<!--    <div class="container">-->
+<!--        <h1>Tìm kiếm bài hát hoặc ca sĩ</h1>-->
+
+<!--        &lt;!&ndash; Form tìm kiếm &ndash;&gt;-->
+<!--        <form action="#" th:action="@{/search}" th:method="get">-->
+<!--            <input type="text" id="keyword" name="keyword" placeholder="Tên bài hát hoặc ca sĩ" required>-->
+<!--            <button type="submit">Tìm kiếm</button>-->
+<!--        </form>-->
+
+<!--        &lt;!&ndash; Hiển thị kết quả tìm kiếm bài hát &ndash;&gt;-->
+<!--        <div th:if="${songs != null and songs.size() > 0}">-->
+<!--            <h2>Kết quả tìm kiếm bài hát</h2>-->
+<!--            <table class="table">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Tên bài hát</th>-->
+<!--                    <th>Ca sĩ</th>-->
+<!--                    <th>Album</th>-->
+<!--                    <th>Nghe nhạc</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="song : ${songs}">-->
+<!--                    <td th:text="${song['name']}"></td>-->
+<!--                    <td th:text="${song['artists'][0]['name']}"></td>-->
+<!--                    <td th:text="${song['album']['name']}"></td>-->
+<!--                    <td>-->
+<!--                        &lt;!&ndash; Nhúng Spotify Player &ndash;&gt;-->
+<!--                        <div class="spotify-player">-->
+<!--                            <iframe th:src="${'https://open.spotify.com/embed/track/' + song['id']}" allow="encrypted-media"></iframe>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Hiển thị kết quả tìm kiếm ca sĩ &ndash;&gt;-->
+<!--        <div th:if="${artists != null and artists.size() > 0}">-->
+<!--            <h2>Kết quả tìm kiếm ca sĩ</h2>-->
+<!--            <table class="table">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>Họ tên</th>-->
+<!--                    <th>Thể loại</th>-->
+<!--                    <th>Nghe thêm</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="artist : ${artists}">-->
+<!--                    <td th:text="${artist['name']}"></td>-->
+<!--                    <td>-->
+<!--                        <ul>-->
+<!--                            <li th:each="genre : ${artist['genres']}" th:text="${genre}"></li>-->
+<!--                        </ul>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <a th:href="${artist['external_urls']['spotify']}" target="_blank">Xem thêm</a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Thông báo lỗi nếu không tìm thấy &ndash;&gt;-->
+<!--        <div th:if="${(songs == null or songs.size() == 0) and (artists == null or artists.size() == 0)}">-->
+<!--            <p class="error">Không tìm thấy kết quả nào phù hợp.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm kiếm bài hát và ca sĩ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+
+
+        nav {
+            background-color: #5c6bc0;
+            padding: 15px;
+            color: white;
+            font-size: 1.8rem;
+            text-align: center;
+            border-bottom: 3px solid #3949ab;
+        }
+
+        nav span {
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 30px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #5c6bc0;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #5c6bc0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #3949ab;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .table th {
+            background-color: #e8eaf6;
+        }
+
+        .table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .error {
+            color: #e53935;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2rem;
+        }
+
+        ul {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: #5c6bc0;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .spotify-player {
+            margin-top: 10px;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 80px;
+        }
+
+        .section-title {
+            color: #3949ab;
+            margin-top: 30px;
+            font-size: 1.5rem;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #757575;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <span>Web Tìm Kiếm Bài Hát</span>
+</nav>
+
+<section layout:fragment="content">
+    <div class="container">
+        <h1>Tìm kiếm bài hát hoặc ca sĩ</h1>
+
+        <!-- Form tìm kiếm -->
+        <form action="#" th:action="@{/search}" th:method="get">
+            <input type="text" id="keyword" name="keyword" placeholder="Tên bài hát hoặc ca sĩ" required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+
+        <!-- Hiển thị kết quả tìm kiếm bài hát -->
+        <div th:if="${songs != null and songs.size() > 0}">
+            <h2 class="section-title">Kết quả tìm kiếm bài hát</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Tên bài hát</th>
+                    <th>Ca sĩ</th>
+                    <th>Album</th>
+                    <th>Nghe nhạc</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="song : ${songs}">
+                    <td th:text="${song['name']}"></td>
+                    <td th:text="${song['artists'][0]['name']}"></td>
+                    <td th:text="${song['album']['name']}"></td>
+                    <td>
+                        <div class="spotify-player">
+                            <iframe th:src="${'https://open.spotify.com/embed/track/' + song['id']}" allow="encrypted-media"></iframe>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Hiển thị kết quả tìm kiếm ca sĩ -->
+        <div th:if="${artists != null and artists.size() > 0}">
+            <h2 class="section-title">Kết quả tìm kiếm ca sĩ</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Họ tên</th>
+                    <th>Thể loại</th>
+                    <th>Nghe thêm</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="artist : ${artists}">
+                    <td th:text="${artist['name']}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="genre : ${artist['genres']}" th:text="${genre}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <a th:href="${artist['external_urls']['spotify']}" target="_blank">Xem thêm</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Hiển thị kết quả album -->
+        <div th:if="${albums != null and albums.size() > 0}">
+            <h2 class="section-title">Danh sách Album</h2>
+            <ul>
+                <th:block th:each="album : ${albums}">
+                    <li>
+                        <strong th:text="${album['name']}"></strong>
+                        <p>Nghệ sĩ: <span th:text="${album['artists'][0]['name']}"></span></p>
+                        <p>Ngày phát hành: <span th:text="${album['release_date']}"></span></p>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+
+        <!-- Hiển thị kết quả playlist -->
+        <div th:if="${playlists != null and playlists.size() > 0}">
+            <h2 class="section-title">Danh sách Playlist</h2>
+            <ul>
+                <th:block th:each="playlist : ${playlists}">
+                    <li>
+                        <strong th:text="${playlist['name']}"></strong>
+                        <p>Người tạo: <span th:text="${playlist['owner']['display_name']}"></span></p>
+                        <p>Chi tiết: <a th:href="${playlist['external_urls']['spotify']}" target="_blank">Xem trên Spotify</a></p>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+
+
+        <!-- Thông báo lỗi nếu không tìm thấy -->
+        <div th:if="${(songs == null or songs.size() == 0) and (artists == null or artists.size() == 0)}">
+            <p class="error">Không tìm thấy kết quả nào phù hợp.</p>
+        </div>
+    </div>
+</section>
+</body>
+</html>
